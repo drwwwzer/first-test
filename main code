@@ -1,0 +1,52 @@
+#include<iostream>
+using namespace std;
+class Rectangle
+{
+public:
+
+	void area(double L, double W)
+	{
+		
+		S = L * W;
+	}
+	void display(double L, double W)
+	{
+		cout << " 长： " << L << endl << " 宽： " << W << " 面积： " << S << endl;
+	}
+
+	double L, W, S;
+
+
+
+};
+void operator>(Rectangle &R1, Rectangle &R2)
+{
+	if (R1.S > R2.S)
+	{
+		cout << "面积较大的矩形的长： " <<  R1.L << " 面积较大的矩形的宽： " << R1.W << endl;
+	}
+	else
+	{
+		cout << "面积较大的矩形的长： " << R2.L <<  " 面积较大的矩形的宽： " << R2.W << endl;
+	}
+}
+
+
+
+
+
+
+int main()
+{
+	Rectangle R1, R2;
+
+	cout << "请按次序分别输入两个矩形的长与宽： " << endl;
+	cin >> R1.L >> R1.W >> R2.L >> R2.W;
+	R1.area(R1.L, R1.W);
+	R2.area(R2.L, R2.W);
+	R1> R2;
+}
+
+
+
+
