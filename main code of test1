@@ -1,0 +1,61 @@
+#include<iostream>
+#include<string>
+#include<algorithm>
+using namespace std;
+int main()
+{
+	int i = 0, N = 1, N_W[100]={0}, N_W0 = 0, stop, m = 0, a1 = 0, a2 = 0, b = 0, n,l=0;
+	string s, W[100];
+	cout << "请输入句子以计数，同时注意须以英文输入法句号结尾。" << endl;
+	getline(cin, s);
+	while (s[i] != '.')//i为字母数,N为词数,N_W为单词的长度,m为第几个词
+	{
+		
+		while (s[i] == ' ')
+		{
+			W[m] = s.substr(a1, i-a1);//注意此处原有错误，回头再看。修改：i-1->i-a1;
+			a1 = i+1;
+			N++;
+			m++;
+			break;
+		}
+		N_W[m]++;//次序可能有误处
+		i++;
+	}
+	if (s[i] == '.')
+	{
+		W[m] = s.substr(a1, i - a1);
+	}
+	stop = m;
+	for ( n = 0; n <= stop; n++)
+	{
+		if (N_W[n] > N_W0)
+		{
+			N_W0 = N_W[n];//最长单词长度
+			a2 = n;
+		}
+	}
+
+	//cout <<N<<" " << N_W0-1<<
+	cout << "句子中单词的总数为：" << N << endl << "单词中最长的单词为： " << W[a2] << endl << "其长度为：" << N_W0 - 1 << endl; //数组从0开始，故需最后输出时加一
+		sort(N_W,N_W+m);
+		cout << "其中各词的长度依升序排列为：";
+		cout << N_W[0]<<" ";
+	for (l = 1; l <= m; l++)
+	{
+		cout << N_W[l]-1<<" ";
+	}
+	
+
+
+
+
+
+
+
+
+
+
+
+}
+
