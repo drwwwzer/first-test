@@ -1,2 +1,2 @@
-# first-test
-first hand of assignment
+# AI's first assignment
+
