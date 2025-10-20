@@ -1,0 +1,183 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class Spaceship
+{
+public:
+	int  speed[3] = {10,20,15}, energy = 100;
+	string Type;
+	virtual void showStats()
+	{
+
+	}
+	virtual void action() = 0;
+};
+
+class CargoShip:public Spaceship
+{
+public:
+	void action()
+	{
+		cout << "运输飞船正在装载货物......" << endl;
+	}
+	void showStats()
+	{
+		cout << "单艘运输飞船的货物容量:" << cargoCapacity << endl << "运输飞船的飞行速度：" << speed[0] << endl << "运输飞船的能量：" << energy << endl;
+	}
+	void loadCargo(int cargo)
+	{
+		int rest = cargoCapacity - cargo;
+		cout << "还有" << rest << "剩余货物容量" << endl;
+	}
+	int cargoCapacity=100;
+	
+};
+
+class BattleShip :public Spaceship
+{
+public:
+	void action()
+	{
+		cout << "战斗飞船即将发射激光！" << endl;
+	}
+
+	void showStats()
+	{
+		cout << "单次发射激光所需能量：" << decreaseEnergy << endl << "战斗飞船的飞行速度：" << speed[1] << endl << "运输飞船的能量：" << energy << endl;
+	}
+	void fireLaser(int times)
+	{
+		int rest = energy - decreaseEnergy * times;
+		cout << "单次发射激光所需能量：" << decreaseEnergy << endl;
+		cout << "预计发射完成后剩余能量：" << rest << endl;
+	}
+
+
+	int weaponPower=10,decreaseEnergy=10;
+};
+
+class ExplorerShip :public Spaceship
+{
+public:
+	void action()
+	{
+		cout << "探索飞船扫描星球中......" << endl;
+	}
+
+	void showStats()
+	{
+		cout << "单次扫描所需能量：" << decreaseEnergy << endl << "探索飞船的飞行速度：" << speed[2] << endl << "探索飞船的能量：" << energy << endl;
+	}
+	void scanPlanet(int time)
+	{
+		int rest = energy - decreaseEnergy * time;
+		cout << "单次扫描所需能量：" << decreaseEnergy;
+		cout << "预计扫描完成后剩余能量：" << rest << endl;
+	}
+	int sacanRange,decreaseEnergy=10;
+};
+
+class SpaceshipFleet
+{
+
+};
+void doAction(Spaceship &spaceship)
+{
+	spaceship.action();
+}
+
+void SetNum(int N_C,int N_B,int N_E)
+{
+	
+	
+	cout << "本次部署的运输飞船数量为：" << N_C <<endl<< "本次部署的战斗飞船数量为：" << N_B <<endl<< "本次部署的探索飞船数量为：" << N_E<<endl;
+
+}
+
+int main()
+{
+	CargoShip C1;
+	BattleShip B1;
+	ExplorerShip E1;
+	string choice,type,con;
+	int N_C = 0, N_B = 0, N_E = 0, TN_C = 0, TN_B = 0, TN_E=0,cargo=0,times=0,time=0,point=0;
+
+	while (point == 0)
+	{
+
+	
+	cout << "菜单：" << endl;
+	cout << "租赁飞船" << endl;
+	cout << "增加飞船" << endl;
+	cout << "查看所有飞船" << endl<<"请在以上选项中选择操作："<<endl;
+	cin >> choice;
+	if (choice == "增加飞船")
+	{
+		cout << "请依次输入想要部署的运输、战斗、探索飞船数量：" << endl;
+		cin >> N_C >> N_B >> N_E;
+		TN_C = TN_C + N_C; TN_B = TN_B + N_B; TN_E = TN_E + N_E;
+		SetNum(N_C,N_B,N_E);
+		cout <<endl<< "输入“返回”，返回菜单.输入“退出”，结束程序" << endl;
+		cin >> con;
+		if (con == "返回")
+		{
+			point = 0;
+		}
+		if (con == "退出")point = 1;
+	}
+	else if (choice == "查看所有飞船")
+	{
+		cout << "目前部署的运输飞船总数量：" << TN_C << endl;
+		C1.showStats();
+		cout << "目前部署的战斗飞船总数量：" << TN_B << endl;
+		B1.showStats();
+		cout << "目前部署的探索飞船总数量：" << TN_E << endl;
+		E1.showStats();
+		cout << endl << "输入“返回”，返回菜单.输入“退出”，结束程序";
+		cin >> con;
+		if (con == "返回")
+		{
+			point = 0;
+		}
+		if (con == "退出")point = 1;
+	}
+	else if (choice == "租赁飞船")
+	{
+		cout << "请输入具体想租赁的飞船类型：" << endl;
+		cin >> type;
+		if (type == "运输飞船")
+		{
+			cout << "请输入将要运输的货物量：" << endl;
+			cin >> cargo;
+			doAction(C1);
+			C1.loadCargo(cargo);
+		}
+		else if (type == "战斗飞船")
+		{
+			cout << "请输入任务预计将要发射激光的次数：" << endl;
+			cin >> times;
+			doAction(B1);
+			B1.fireLaser(times);
+		}
+		else if (type == "探索飞船")
+		{
+			cout << "请输入任务预计将进行扫描的扫描周期数：" << endl;
+			cin >> time;
+			doAction(E1);
+			E1.scanPlanet(time);
+		}
+		cout << endl << "输入“返回”，返回菜单.输入“退出”，结束程序" << endl;
+		cin >> con;
+		if (con == "返回")
+		{
+			point = 0;
+		}
+		if (con == "退出")point = 1;
+	}
+	else
+	{
+		cout << "输入了不存在的选项，请重新输入";
+	}
+	}
+	cout <<endl<< "飞船已部署......";
+}
